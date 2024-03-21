@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static  'css/django.css' %}">
+    <title>Approve Requisition</title>
+
+</head>
+
+<body class="bg-blue-500 bg-opacity-20">
+    <div>
+        <h2 class="text-2xl font-bold bg-slate-900 text-slate-300 h-20 pl-8  pt-5 mb-5">Approve Requisition</h2>
+
+        <div class="flex justify-center flex-col items-center w-full relative">
+            <div class="h-96  bg-white w-[40rem] rounded-lg">
+                <h3 class="text-center font-bold text-xl m-4">Requisition Details</h3>
+
+                <div class="flex py-4 px-16 flex-col">
+                    <p class="w-full flex justify-between italic text-lg"><span class="font-bold">Date of
+                            Submission:</span>
+                        {{approval_request.Date }}</p>
+                    <p class="w-full flex justify-between italic text-lg"><span class="font-bold">Category:</span>
+                        {{approval_request.Categories }}</p>
+                    {% if approval_request.Purpose %}
+                    <p class="w-full flex justify-between italic text-lg"><span
+                            class="font-bold">Purpose:</span>{{approval_request.Purpose }}</p>
+                    {% endif %}
+                    <p class="w-full flex justify-between italic text-lg"><span class="font-bold">Item_name:</span>
+                        {{approval_request.Item_name }}</p>
+                </div>
+                <form method="post" action="{% url 'Req:approve_requisition' approval_request.id %}"
+                    class="flex w-full justify-between px-16">
+                    {% csrf_token %}
+                    <!-- {{ decision_form.as_p }} -->
+                    <div class="flex justify-between w-28">
+                        <label for="{{ decision_form.approved.id_for_label }}"
+                            class="font-bold">{{decision_form.approved.label}}</label>
+                        <input type="checkbox" class="rounded p-3"
+                            name="{{ decision_form.approved.field.widget.input_type }}"
+                            value="{{decision_form.approved.value|default:''}}">
+                    </div>
+                    <input value="Submit" type="submit" name="approve"
+                        class="bg-black text-white rounded-md py-2 px-4 font-bold">
+                </form>
+            </div>
+
+            <p class="absolute left-[44rem] top-[25rem]"><a class="text-red-600 hover:text-red-900 font-bold"
+                    href="{% url 'Req:submit_requisition' %}">Back to Unapproved Requests</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

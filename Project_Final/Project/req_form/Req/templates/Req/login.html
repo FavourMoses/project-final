@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/django.css' %}">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <div class="flex items-center justify-center h-screen bg-blue-500 login-container bg-opacity-20">
+        <form method="post"
+            class="shadow-md shadow-slate-400 rounded-md border-black w-[420px] aspect-square text-2xl p-3 bg-white">
+            <div class="w-[160px] h-10 flex text-white font-bold font-mont">
+                <div class="w-full pt-1 text-center bg-black ps-2 me-0">INTEL</div>
+                <div class="w-full pt-1 bg-red-600 ">BOX</div>
+            </div>
+
+            <!-- {{ form.as_p }} -->
+            <div class="flex flex-col w-full mt-7 gap-y-7">
+                <div class="w-full">
+                    <label for="{{ form.username.id_for_label }}"
+                        class="block mb-2 text-xl font-bold text-neutral-600 ">
+                        {{ form.username.label }}
+                    </label>
+                    <input type="{{ form.username.field.widget.input_type }}" name="{{ form.username.name }}"
+                        id="{{ form.username.id_for_label }}"
+                        class="w-full h-12 text-sm border-b-2 border-gray-400 rounded font-mont"
+                        placeholder="Enter Your {{ form.username.label }}" value="{{ form.username.value|default:'' }}">
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.password.id_for_label }}" class="block mb-2 text-xl font-bold text-neutral-600">
+                        {{ form.password.label }}
+                    </label>
+                    <input type="{{ form.password.field.widget.input_type }}" name="{{ form.password.name }}"
+                        id="{{ form.password.id_for_label }}"
+                        class="w-full h-12 text-sm border-b-2 border-gray-400 rounded font-mont"
+                        placeholder="Enter Your {{ form.password.label }}" value="{{ form.password.value|default:'' }}">
+                </div>
+                <button type="submit"
+                    class="px-4 py-2 text-lg text-white bg-red-600 rounded-md shadow-inner w-36 shadow-gray-50 font-mont">Login</button>
+
+            </div>
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'Req:submit_requisition' %}" />
+        </form>
+    </div>
+</body>
+
+</html>
